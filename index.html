@@ -63,13 +63,15 @@ button,input{font:inherit;color:inherit}
 .shc{display:flex;gap:8px;--cw:var(--sw,56px)}
 .bw{flex:1;position:relative;display:grid;place-items:center;min-height:0}
 .bd{display:grid;gap:var(--g,10px);grid-template-columns:repeat(var(--n,3),var(--cw,80px))}
-.card{width:var(--cw);aspect-ratio:5/7;position:relative;border:0;padding:0;background:none;cursor:pointer;font-size:calc(var(--cw)*.28);perspective:900px;border-radius:calc(var(--cw)*.09);transition:transform .2s,filter .3s}
+.card{width:var(--cw);aspect-ratio:5/7;position:relative;border:0;padding:0;background:none;cursor:pointer;perspective:900px;border-radius:calc(var(--cw)*.065);transition:transform .2s,filter .3s}
 .in{position:absolute;inset:0;transition:transform .5s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
 .card.up .in{transform:rotateY(180deg)}
-.f{position:absolute;inset:0;border-radius:calc(var(--cw)*.09);backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 3px 8px rgba(0,0,0,.5)}
-.back{background:repeating-linear-gradient(45deg,rgba(255,240,225,.08) 0 2px,transparent 2px 9px),repeating-linear-gradient(-45deg,rgba(255,240,225,.08) 0 2px,transparent 2px 9px),linear-gradient(160deg,#ad2232,#6a1220);box-shadow:inset 0 0 0 calc(var(--cw)*.05) #f3e6d6,inset 0 0 0 calc(var(--cw)*.07) #6a1220,0 3px 8px rgba(0,0,0,.5)}
+.f{position:absolute;inset:0;border-radius:calc(var(--cw)*.065);overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 3px 8px rgba(0,0,0,.5)}
+.back{background:repeating-linear-gradient(45deg,rgba(255,255,255,.22) 0 1px,transparent 1px 7px),repeating-linear-gradient(-45deg,rgba(255,255,255,.22) 0 1px,transparent 1px 7px),#b3192b;box-shadow:inset 0 0 0 calc(var(--cw)*.055) #fffdf8,inset 0 0 0 calc(var(--cw)*.065) #b3192b,inset 0 0 0 calc(var(--cw)*.072) #fffdf8,0 3px 8px rgba(0,0,0,.5)}
 .back::after{content:"";position:absolute;left:50%;top:50%;width:28%;aspect-ratio:1;border:2px solid rgba(243,230,214,.6);transform:translate(-50%,-50%) rotate(45deg);border-radius:3px}
-.front{transform:rotateY(180deg);background:linear-gradient(170deg,#fffcf6,#f1e9dc);color:#1d1a1a}
+.front{transform:rotateY(180deg);background:#fffdf8;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14),0 3px 8px rgba(0,0,0,.5)}
+.front svg{display:block;width:100%;height:100%}
+.ix{font:700 52px Georgia,"Times New Roman",serif;text-anchor:middle}.ct{font:700 46px Georgia,"Times New Roman",serif;text-anchor:middle}
 .front.red{color:#c8202f}
 .r{position:absolute;left:8%;top:5%;display:flex;flex-direction:column;align-items:center;font:800 1em/.95 Georgia,"Times New Roman",serif}.r small{font-size:.72em;margin-top:2px}
 .big{position:absolute;inset:0;display:grid;place-items:center;padding-top:14%;font-size:1.75em;line-height:1}
@@ -135,6 +137,12 @@ td.n{text-align:right;font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="su0" viewBox="0 0 100 100"><path d="M50 3C42 20 6 38 6 61c0 14 11 23 23 23 8 0 14-4 18-10-1 10-5 18-13 23h32c-8-5-12-13-13-23 4 6 10 10 18 10 12 0 23-9 23-23C94 38 58 20 50 3z"/></symbol>
+<symbol id="su1" viewBox="0 0 100 100"><path d="M50 94C24 72 4 56 4 33 4 17 16 6 30 6c9 0 16 5 20 13 4-8 11-13 20-13 14 0 26 11 26 27 0 23-20 39-46 61z"/></symbol>
+<symbol id="su2" viewBox="0 0 100 100"><path d="M50 2Q66 28 88 50Q66 72 50 98Q34 72 12 50Q34 28 50 2z"/></symbol>
+<symbol id="su3" viewBox="0 0 100 100"><circle cx="50" cy="27" r="21"/><circle cx="26" cy="60" r="21"/><circle cx="74" cy="60" r="21"/><path d="M42 44h16v14H42z"/><path d="M47 58c0 16-5 28-14 39h34c-9-11-14-23-14-39z"/></symbol>
+</defs></svg>
 <div id="app" class="side">
   <header id="bar">
     <div class="rd"><b id="rdN"></b><span id="rdS"></span></div>
@@ -273,9 +281,22 @@ function evalHand(cs){
 function cmp(a,b){if(a.k!==b.k)return a.k-b.k;for(let i=0;i<Math.max(a.tb.length,b.tb.length);i++){const d=(a.tb[i]||0)-(b.tb[i]||0);if(d)return d}return 0}
 function bestPair(){let b=null;for(let i=0;i<S.grid.length;i++)for(let j=i+1;j<S.grid.length;j++){const h=evalHand([S.grid[i],S.grid[j],...S.shared]);if(!b||cmp(h,b.h)>0)b={i,j,h}}return b}
 
+const PIP=(()=>{const L=72,M=125,R=178,T=78,B=272,six=[[L,T],[R,T],[L,175],[R,175],[L,B],[R,B]],nine=[[L,T],[R,T],[L,143],[R,143],[L,207],[R,207],[L,B],[R,B]];
+  return{2:[[M,T],[M,B]],3:[[M,T],[M,175],[M,B]],4:[[L,T],[R,T],[L,B],[R,B]],5:[[L,T],[R,T],[M,175],[L,B],[R,B]],6:six,7:[...six,[M,126]],8:[...six,[M,126],[M,224]],9:[...nine,[M,175]],10:[...nine,[M,110],[M,240]]}})();
+const CROWN={K:'<path d="M88 114 82 74l21 20 22-28 22 28 21-20-6 40z" fill="#e2ad3b" stroke="#1d1a1a" stroke-width="2.5" stroke-linejoin="round"/><path d="M88 114h74v9H88z" fill="#2f5fa8" stroke="#1d1a1a" stroke-width="2"/><circle cx="82" cy="72" r="5" fill="#c8202f"/><circle cx="125" cy="64" r="5" fill="#c8202f"/><circle cx="168" cy="72" r="5" fill="#c8202f"/>',
+  Q:'<path d="M92 116Q86 96 84 80Q100 96 108 86Q117 72 125 70Q133 72 142 86Q150 96 166 80Q164 96 158 116z" fill="#e2ad3b" stroke="#1d1a1a" stroke-width="2.5" stroke-linejoin="round"/><circle cx="84" cy="78" r="5" fill="#2f5fa8"/><circle cx="125" cy="66" r="5" fill="#2f5fa8"/><circle cx="166" cy="78" r="5" fill="#2f5fa8"/>',
+  J:'<path d="M92 118Q94 84 125 82Q156 84 158 118z" fill="#2f5fa8" stroke="#1d1a1a" stroke-width="2.5"/><path d="M92 118h66v7H92z" fill="#e2ad3b" stroke="#1d1a1a" stroke-width="2"/><path d="M148 92Q178 76 176 56Q162 74 144 84z" fill="#c8202f" stroke="#1d1a1a" stroke-width="2"/>'};
+function face(c){const red=c.s===1||c.s===2,col=red?'#c8202f':'#1d1a1a',rk=RN[c.r]||String(c.r),u=(x,y,w,f)=>`<use href="#su${c.s}" x="${x-w/2}" y="${y-w/2}" width="${w}" height="${w}"${f?` transform="rotate(180 ${x} ${y})"`:''}/>`;
+  const ix=`<text x="26" y="54" class="ix"${c.r===10?' textLength="44" lengthAdjust="spacingAndGlyphs"':''}>${rk}</text>${u(26,76,28)}`;
+  let mid='';
+  if(c.r===14)mid=u(125,175,c.s===0?124:96);
+  else if(c.r>10){const half=`${u(68,68,24)}${CROWN[rk]}<path d="M90 128h70" stroke="${red?'#2f5fa8':'#c8202f'}" stroke-width="4" opacity=".5"/><text x="125" y="163" class="ct">${rk}</text>`;
+    mid=`<rect x="46" y="44" width="158" height="262" rx="6" fill="#fbf0d6" stroke="#1d1a1a" stroke-width="2.5"/><rect x="52" y="50" width="146" height="250" rx="3" fill="none" stroke="${col}" stroke-width="1.5" opacity=".55"/><g>${half}</g><g transform="rotate(180 125 175)">${half}</g><path d="M52 186 198 164" stroke="#1d1a1a" stroke-width="2"/>`}
+  else mid=PIP[c.r].map(([x,y])=>u(x,y,46,y>175)).join('');
+  return `<svg viewBox="0 0 250 350" aria-hidden="true"><g fill="${col}">${ix}<g transform="rotate(180 125 175)">${ix}</g>${mid}</g></svg>`}
 const ariaOf=i=>i>=100?L.shared(i-99):L.card(i+1);
-function cardHTML(c,i){const red=c.s===1||c.s===2,s=SU[c.s],r=RN[c.r]||c.r;
-  return `<button type="button" class="card" data-i="${i}" aria-label="${ariaOf(i)}"><span class="in"><span class="f back"></span><span class="f front${red?' red':''}"><span class="r">${r}<small>${s}</small></span><span class="big">${s}</span></span></span><span class="bdg"></span><span class="star">★</span></button>`}
+function cardHTML(c,i){
+  return `<button type="button" class="card" data-i="${i}" aria-label="${ariaOf(i)}"><span class="in"><span class="f back"></span><span class="f front">${face(c)}</span></span><span class="bdg"></span><span class="star">★</span></button>`}
 
 function build(){
   P.forEach(pn=>{const bd=pn.querySelector('.bd');bd.style.setProperty('--n',S.size);bd.innerHTML=S.grid.map(cardHTML).join('');
@@ -283,7 +304,7 @@ function build(){
   fitAll();
 }
 function fit(p){const pn=P[p],bw=pn.querySelector('.bw'),bd=pn.querySelector('.bd');
-  const sw=Math.round(Math.max(34,Math.min(78,pn.clientWidth*.1,pn.clientHeight*.095)));pn.style.setProperty('--sw',sw+'px');
+  const sw=Math.round(Math.max(40,Math.min(86,pn.clientWidth*.12,pn.clientHeight*.11)));pn.style.setProperty('--sw',sw+'px');
   requestAnimationFrame(()=>{const w=bw.clientWidth-16,h=bw.clientHeight-16,n=S.size,g=Math.round(Math.max(6,Math.min(16,w*.025)));
     const cw=Math.floor(Math.max(30,Math.min((w-g*(n-1))/n,((h-g*(n-1))/n)*5/7)));bd.style.setProperty('--cw',cw+'px');bd.style.setProperty('--g',g+'px')})}
 function fitAll(){fit(0);fit(1)}
