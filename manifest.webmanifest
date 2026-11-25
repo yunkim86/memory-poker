@@ -1,0 +1,15 @@
+{
+  "name": "데블스 플랜: 기억 포커",
+  "short_name": "기억 포커",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#170a0d",
+  "theme_color": "#170a0d",
+  "lang": "ko",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
